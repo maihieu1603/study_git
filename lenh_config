@@ -9,3 +9,5 @@ git config --global user.email
 #Không xét user và email
 git config --global --unset user.name
 git config --global --unset user.email
+
+day la thay dôi
