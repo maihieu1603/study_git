@@ -1,0 +1,11 @@
+#set user và email
+git config --global user.name "maihieu"
+git config --global user.email "maixuanhieuytt@gmail.com"
+
+#In cài đặt user và email:
+git config --global user.name
+git config --global user.email
+
+#Không xét user và email
+git config --global --unset user.name
+git config --global --unset user.email
