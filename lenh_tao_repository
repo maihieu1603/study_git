@@ -1,0 +1,7 @@
+#lệnh tạo repository trên local
+git init
+#lệnh xem kết nối giữa local và remote
+git remote
+git remote -v
+#lệnh tạo kết nối
+xem trên github

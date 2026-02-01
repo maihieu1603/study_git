@@ -1,0 +1,68 @@
+#  lệnh tạo kết nối giữa nhanh main trên local với remote
+git push -u origin main 
+# lần sau chỉ cần git push để đẩy code lên nhanh main
+git push
+
+#lệnh xem log
+git log
+git log --oneline
+git log --oneline --graph
+
+# lệnh tải thay đổi 
+git fetch
+# lệnh gộp code 
+git merge
+# lệnh tải thay đổi và merge luôn
+git pull
+git pull [remote] [local]
+
+
+# git head
+# head có 2 trạng thái nomal head và detached
+# nomal là khi tạo commit mới head sẽ ở vị trí nhánh đó và commit đó
+# detached khi ta checkout lại commit cũ
+# lưu ý khi head đạng detached nếu ta sửa và commit thì sẽ bị mất các commit khi sửa -> phải tạo nhánh mới từ đó để tránh mất commit
+
+# lệnh tạo nhánh 
+# lệnh tạo nhánh mới từ nhánh hiện tại đang đứng và có cùng commit với nhánh hiện tại
+git branch <ten nhanh>
+
+# lệnh chuyển nhánh
+git switch <ten nhanh>
+
+# lệnh tạo và chuyển qua luôn
+git switch -c <tên nhanh>
+
+# lệnh xem nhánh trên local
+git branch
+
+# lệnh xóa nhánh (nếu muốn xóa nhánh thì chuyển qua nhánh khác và xóa nhánh cần xóa)
+git branch -d <ten nhanh>  // nhánh đã được merge với nhánh khác
+git branch -D <ten nhanh> // ép xóa nhánh nếu nhánh chưa được merge
+
+# lệnh làm việc với branch, commit, file
+git checkout <ten nhanh> //chuyển nhánh
+git checkout <ten commit> // chuyển commit
+git checkout <ten file> // phục hồi file
+
+
+# lệnh merge code
+# đầu tiên chuyển về nhánh muốn merge 
+# sau đó dùng lệnh
+git merge <ten nhanh muon merge vao nhanh dang đứng>
+
+
+#lệnh kiểm tra sự khác biệt giữa 2 file
+# chưa thực hiện add
+git diff
+git diff <ten file>
+git diff <branch_1> <branch_2>
+git diff <branch_1> <branch_2> -- <ten file>
+git diff <commit 1> <commit_2>
+git diff <commit 1> <commit_2> -- <ten file>
+
+
+# đã add vào trong stage 
+git diff --staged
+git diff --staged --ten file
+

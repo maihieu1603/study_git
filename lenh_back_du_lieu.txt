@@ -1,0 +1,17 @@
+#quay lại trạng thái file cũ
+git restore <ten file>
+
+nếu đã add vào staged
+git restore --staged filename
+git restore filename
+
+git restore .
+git restore --source HEAD~N filename // là số thứ tự file trước đó
+
+
+#đưa code về commit trước đó
+
+git reset <id commit> --mixed //giữ các thay đổi ở working
+git reset <id commit> --soft //giữ các thay đổi ở staged
+git reset <id commit> --hard //xóa hết trạng thái giống hệt commit truyền vào
+
