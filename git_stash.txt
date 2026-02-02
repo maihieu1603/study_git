@@ -1,0 +1,6 @@
+git stash	L//ưu tạm thời các thay đổi chưa commit
+git stash list	//Liệt kê các stash đang lưu
+git stash apply	//Áp dụng lại stash mới nhất (hoặc chỉ định stash cụ thể)
+git stash drop	//Xóa stash cụ thể
+git stash pop	//Áp dụng và xóa stash khỏi danh sách
+git stash clear	//Xóa toàn bộ các stash

@@ -1,17 +1,130 @@
-#quay lại trạng thái file cũ
-git restore <ten file>
+###############################
+#        GIT CHEAT SHEET
+#   RESTORE – RESET – REVERT
+###############################
 
-nếu đã add vào staged
-git restore --staged filename
-git restore filename
+# =============================
+# 1. GIT RESTORE
+# (Hủy thay đổi FILE – KHÔNG đụng lịch sử commit)
+# =============================
 
+# 1.1 Hủy thay đổi file (chưa git add)
+git restore <file>
+# → Quay file về trạng thái ở commit gần nhất (HEAD)
+# → Mất mọi thay đổi chưa commit
+
+# Cách cũ (tương đương)
+git checkout -- <file>
+
+# -----------------------------
+
+# 1.2 File đã add vào STAGED
+git restore --staged <file>
+# → Gỡ file khỏi stage (quay về working tree)
+
+git restore <file>
+# → Hủy nội dung file
+
+# (Thường dùng 2 lệnh liên tiếp để bỏ hoàn toàn thay đổi)
+
+# -----------------------------
+
+# 1.3 Hủy thay đổi TẤT CẢ file
 git restore .
-git restore --source HEAD~N filename // là số thứ tự file trước đó
+# → Toàn bộ project quay về HEAD
+# ⚠️ Mất hết thay đổi chưa commit
+
+# -----------------------------
+
+# 1.4 Lấy lại file từ commit cũ
+git restore --source HEAD~N <file>
+# → Lấy file từ N commit trước (N = 1,2,3...)
+
+# Ví dụ
+git restore --source HEAD~2 config.txt
+
+# Cách khác (tương đương)
+git checkout HEAD~2 -- config.txt
 
 
-#đưa code về commit trước đó
+# =============================
+# 2. GIT RESET
+# (Quay branch về commit cũ – CÓ THAY ĐỔI LỊCH SỬ)
+# =============================
 
-git reset <id commit> --mixed //giữ các thay đổi ở working
-git reset <id commit> --soft //giữ các thay đổi ở staged
-git reset <id commit> --hard //xóa hết trạng thái giống hệt commit truyền vào
+# ⚠️ KHÔNG dùng reset cho branch đã push / dùng chung
 
+
+# 2.1 RESET --mixed (mặc định)
+git reset <commit_id>
+git reset <commit_id> --mixed
+# → Xóa các commit SAU commit_id
+# → Giữ thay đổi ở WORKING TREE (chưa staged)
+
+# Dùng khi: muốn sửa code rồi commit lại
+
+# -----------------------------
+
+# 2.2 RESET --soft
+git reset <commit_id> --soft
+# → Xóa commit sau commit_id
+# → Giữ thay đổi ở STAGED
+
+# Dùng khi: gộp nhiều commit thành 1
+
+# -----------------------------
+
+# 2.3 RESET --hard (NGUY HIỂM)
+git reset <commit_id> --hard
+# → Xóa commit + xóa luôn code
+# → Project giống hệt commit_id
+
+# ⚠️ Mất dữ liệu – chỉ dùng khi chắc chắn
+
+
+# =============================
+# 3. GIT REVERT
+# (Hoàn tác commit – KHÔNG xóa lịch sử)
+# =============================
+
+git revert <commit_id>
+# → Tạo 1 commit MỚI
+# → Đảo ngược đúng những gì commit đó đã làm
+# → An toàn cho branch đã push
+
+# -----------------------------
+
+# Revert nhiều commit liên tiếp
+git revert <commit_old>..<commit_new>
+
+# Ví dụ
+git revert abc123..def456
+
+
+# =============================
+# 4. SO SÁNH – KIỂM TRA (NÊN DÙNG TRƯỚC KHI QUAY LẠI)
+# =============================
+
+# Xem thay đổi chưa add
+git diff
+
+# Xem thay đổi đã staged
+git diff --staged
+
+# Xem lịch sử gọn
+git log --oneline --graph --all
+
+# Xem commit liên quan tới file
+git log -- <file>
+
+
+# =============================
+# 5. GHI NHỚ NHANH
+# =============================
+
+# restore → file
+# reset   → branch / commit (xóa lịch sử)
+# revert  → undo commit (giữ lịch sử)
+
+# An toàn nhất khi đã push → dùng REVERT
+# Nguy hiểm nhất           → reset --hard

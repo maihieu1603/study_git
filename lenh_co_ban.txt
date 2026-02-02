@@ -1,68 +1,169 @@
-#  lệnh tạo kết nối giữa nhanh main trên local với remote
-git push -u origin main 
-# lần sau chỉ cần git push để đẩy code lên nhanh main
+########################################
+#           GIT CHEAT SHEET
+#   PUSH – PULL – BRANCH – MERGE – DIFF
+########################################
+
+
+# ======================================
+# 1. PUSH – KẾT NỐI LOCAL ↔ REMOTE
+# ======================================
+
+# Tạo liên kết (upstream) giữa local main và origin/main
+git push -u origin main
+# → Lần đầu push branch
+# → Ghi nhớ remote cho branch
+
+# Từ lần sau chỉ cần
 git push
+# → Push lên đúng upstream đã cấu hình
 
-#lệnh xem log
+
+# ======================================
+# 2. XEM LỊCH SỬ COMMIT
+# ======================================
+
 git log
+# → Xem đầy đủ commit (dài, chi tiết)
+
 git log --oneline
+# → Mỗi commit 1 dòng (dễ nhìn)
+
 git log --oneline --graph
+# → Xem lịch sử dạng cây (branch, merge)
 
-# lệnh tải thay đổi 
+
+# ======================================
+# 3. FETCH – MERGE – PULL
+# ======================================
+
+# Tải commit mới từ remote, KHÔNG merge
 git fetch
-# lệnh gộp code 
-git merge
-# lệnh tải thay đổi và merge luôn
+# → An toàn, chỉ cập nhật origin/*
+
+# Gộp code từ branch khác vào branch hiện tại
+git merge <branch>
+# → Phải switch về branch đích trước
+
+# Vừa fetch vừa merge
 git pull
-git pull [remote] [local]
+# → = git fetch + git merge
+
+# Pull rõ ràng remote & branch
+git pull <remote> <branch>
+# Ví dụ:
+git pull origin main
 
 
-# git head
-# head có 2 trạng thái nomal head và detached
-# nomal là khi tạo commit mới head sẽ ở vị trí nhánh đó và commit đó
-# detached khi ta checkout lại commit cũ
-# lưu ý khi head đạng detached nếu ta sửa và commit thì sẽ bị mất các commit khi sửa -> phải tạo nhánh mới từ đó để tránh mất commit
+# ======================================
+# 4. GIT HEAD
+# ======================================
 
-# lệnh tạo nhánh 
-# lệnh tạo nhánh mới từ nhánh hiện tại đang đứng và có cùng commit với nhánh hiện tại
-git branch <ten nhanh>
+# HEAD = con trỏ đang trỏ tới commit hiện tại
 
-# lệnh chuyển nhánh
-git switch <ten nhanh>
+# NORMAL HEAD:
+# - HEAD trỏ vào branch
+# - Commit mới sẽ đi theo branch
 
-# lệnh tạo và chuyển qua luôn
-git switch -c <tên nhanh>
+# DETACHED HEAD:
+# - HEAD trỏ trực tiếp vào commit
+# - Xảy ra khi checkout commit cũ
 
-# lệnh xem nhánh trên local
+# ⚠️ Lưu ý:
+# Nếu đang DETACHED HEAD mà commit
+# → commit đó CÓ THỂ BỊ MẤT
+# → Giải pháp: tạo branch mới từ đó
+
+
+# ======================================
+# 5. LÀM VIỆC VỚI BRANCH
+# ======================================
+
+# Tạo branch mới (từ branch hiện tại)
+git branch <branch_name>
+
+# Chuyển branch
+git switch <branch_name>
+
+# Tạo + chuyển branch
+git switch -c <branch_name>
+
+# Xem branch local
 git branch
 
-# lệnh xóa nhánh (nếu muốn xóa nhánh thì chuyển qua nhánh khác và xóa nhánh cần xóa)
-git branch -d <ten nhanh>  // nhánh đã được merge với nhánh khác
-git branch -D <ten nhanh> // ép xóa nhánh nếu nhánh chưa được merge
+# Xóa branch (đã merge)
+git branch -d <branch_name>
 
-# lệnh làm việc với branch, commit, file
-git checkout <ten nhanh> //chuyển nhánh
-git checkout <ten commit> // chuyển commit
-git checkout <ten file> // phục hồi file
+# Ép xóa branch (chưa merge)
+git branch -D <branch_name>
 
 
-# lệnh merge code
-# đầu tiên chuyển về nhánh muốn merge 
-# sau đó dùng lệnh
-git merge <ten nhanh muon merge vao nhanh dang đứng>
+# ======================================
+# 6. CHECKOUT (CÁCH CŨ – VẪN GẶP NHIỀU)
+# ======================================
+
+# Chuyển branch
+git checkout <branch_name>
+
+# Checkout commit (DETACHED HEAD)
+git checkout <commit_id>
+
+# Phục hồi file
+git checkout -- <file>
 
 
-#lệnh kiểm tra sự khác biệt giữa 2 file
-# chưa thực hiện add
+# ======================================
+# 7. MERGE CODE
+# ======================================
+
+# Bước 1: chuyển về branch nhận code
+git switch main
+
+# Bước 2: merge branch khác vào
+git merge <branch_muon_merge>
+
+
+# ======================================
+# 8. GIT DIFF – SO SÁNH KHÁC BIỆT
+# ======================================
+
+# Chưa git add
 git diff
-git diff <ten file>
+# → So working tree vs HEAD
+
+git diff <file>
+# → So 1 file
+
 git diff <branch_1> <branch_2>
-git diff <branch_1> <branch_2> -- <ten file>
-git diff <commit 1> <commit_2>
-git diff <commit 1> <commit_2> -- <ten file>
+# → So toàn bộ 2 branch
+
+git diff <branch_1> <branch_2> -- <file>
+# → So 1 file giữa 2 branch
+
+git diff <commit_1> <commit_2>
+# → So 2 commit
+
+git diff <commit_1> <commit_2> -- <file>
+# → So 1 file giữa 2 commit
 
 
-# đã add vào trong stage 
+# Đã git add (staged)
 git diff --staged
-git diff --staged --ten file
+# → So staged vs HEAD
 
+git diff --staged -- <file>
+# → So 1 file đã staged
+
+
+# ======================================
+# 9. GHI NHỚ NHANH
+# ======================================
+
+# fetch  → tải commit, không động code
+# merge  → gộp code
+# pull   → fetch + merge
+
+# switch → đổi branch (khuyên dùng)
+# checkout → cũ, đa năng, dễ gây detached HEAD
+
+# diff trước khi add
+# diff --staged trước khi commit

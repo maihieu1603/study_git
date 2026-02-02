@@ -1,0 +1,38 @@
+#tạo file .gitignore
+
+#thêm nội dung vào file
+
+
+# Ignore tất cả files .txt trong bất kỳ thư mục nào
+**/*.txt
+
+# Ignore chỉ .txt ở root level
+/*.txt
+
+# Ignore tất cả trong folder nhưng giữ folder
+logs/*
+!logs/.gitkeep
+
+# Ignore files bắt đầu bằng test
+test*
+
+# Ignore files kết thúc bằng .dev
+*.dev
+
+
+Ký hiệu:
+
+* : Match bất kỳ ký tự nào
+
+** : Match nested directories
+
+! : Negate pattern (không ignore)
+
+/ : Root directory
+
+Chú ý:
+
+# dùng để comment trong file .gitignore (các ký tự sau # không có ý nghĩa)
+
+Git sử dụng forward slash / cho đường dẫn trong .gitignore
+(kể cả trên Windows cũng phải dùng /)
